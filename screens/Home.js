@@ -72,7 +72,7 @@ const Home = (props) => {
     const mainMeal = [
         {
             img: require('../assets/images/Meal-PNG-Download-Image.png'),
-            bgColor: '#000'
+            bgColor: '#C70039'
         },
         {
             img: require('../assets/images/burger-png-png-images-yellow-images.png'),
@@ -84,7 +84,7 @@ const Home = (props) => {
         },
         {
             img: require('../assets/images/burger-png-png-images-yellow-images.png'),
-            bgColor: '#C70039'
+            bgColor: '#000'
         },
     ]
 
@@ -147,7 +147,7 @@ const Home = (props) => {
                 <Text style={{ color: '#fff', fontFamily: 'Poppins-Regular', fontSize: 15, fontWeight: 'bold' }}>
                     off on your {'\n'}  first meal
                 </Text>
-                <TouchableOpacity onPress={() => props.navigation.navigate('MealDetails')} style={{ backgroundColor: '#fff', borderRadius: 20, marginTop: 5, width: 104, height: 29, alignItems: 'center', paddingTop: 3}}>
+                <TouchableOpacity onPress={() => props.navigation.navigate('MealDetails')} style={{ backgroundColor: '#fff', borderRadius: 20, marginTop: 5, width: 104, height: 29, alignItems: 'center', paddingTop: 3 }}>
                     <Text style={{ fontSize: 15, fontFamily: 'Poppins-Regular', color: '#000', fontWeight: '600', }}>
                         Order Now!
                     </Text>

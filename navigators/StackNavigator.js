@@ -16,6 +16,7 @@ import MealDetails from '../screens/MealDetails';
 import Cart from '../screens/Cart'
 import CardInfo from '../screens/CardInfo'
 import TermsAndCondition from '../screens/TermsAndCondition'
+import OnboardingScreen from '../screens/OnboardingScreen'
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -33,6 +34,7 @@ const DrawerRoot = () => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="OnboardingScreen" component={OnboardingScreen} />
       <Stack.Screen name="Wellcome" component={Wellcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Signup" component={Signup} />
