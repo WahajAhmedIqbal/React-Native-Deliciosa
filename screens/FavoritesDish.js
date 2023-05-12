@@ -77,7 +77,7 @@ const FavoritesDish = (props) => {
                         paddingVertical: 7, 
                         display: 'flex', justifyContent: 'space-between',
                         flexDirection: 'column', alignItems: 'center',
-                        marginTop: 19, height: 180, width: 165,
+                        marginTop: 19, height: 180, width: '47%',
                         backgroundColor: 'white', borderRadius: 13,
                         position: 'relative',
                     }}>

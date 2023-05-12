@@ -1,10 +1,14 @@
-import React from 'react'
-import { View, FlatList, Text, Image, Dimensions, StyleSheet } from 'react-native'
+import React, { useRef, useState } from 'react'
+import { View, FlatList, Text, Image, Dimensions, StyleSheet, TouchableOpacity } from 'react-native'
 
 
 const { width, height } = Dimensions.get('window');
 
 const OnboardingScreen = () => {
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const flatListRef = useRef(null)
+
+    console.log('ref', currentIndex)
 
     const onBardingData = [
         {
@@ -27,7 +31,12 @@ const OnboardingScreen = () => {
         },
     ];
 
-    const onBordingSlides = ({ item }, index) => {
+    const handleNextSlide = (nextIndex) => {
+        setCurrentIndex(nextIndex);
+        flatListRef.current.scrollToIndex({ animated: true, index: nextIndex });
+    };
+
+    const onBordingSlides = ({ item, index }) => {
         return (
             <View key={index} style={{ flex: 1, height: height, backgroundColor: '#fff', width: width }}>
                 <Image style={[{
@@ -36,9 +45,13 @@ const OnboardingScreen = () => {
                 <Text style={{ textAlign: 'center', color: '#000', marginTop: 25, fontFamily: 'Poppins-Regular', fontSize: 20, fontWeight: 'bold', }}>
                     {item.title}
                 </Text>
-                <Text style={{ textAlign: 'center', maxWidth: 300, marginLeft: 'auto', marginRight: 'auto', marginTop: 5, fontSize: 16, fontFamily: 'Poppins-Regular',  }}>
+                <Text style={{ textAlign: 'center', maxWidth: 270, marginLeft: 'auto', marginRight: 'auto', marginTop: 5, fontSize: 16, fontFamily: 'Poppins-Regular', }}>
                     {item.desc}
                 </Text>
+                <TouchableOpacity style={[currentIndex == 2 ? {display:'block'}: null]} onPress={() => handleNextSlide(index + 1)}>
+                    <Text style={styles.buttonText}>Next</Text>
+                </TouchableOpacity>
+
             </View>
         )
     }
@@ -46,16 +59,19 @@ const OnboardingScreen = () => {
     return (
         <View>
             <FlatList
+                ref={flatListRef}
                 style={{}}
                 data={onBardingData}
                 renderItem={onBordingSlides}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
-
+                scrollEventThrottle={16}
+                // onScroll={handleScroll}
                 snapToInterval={width}
-                snapToAlignment="center"
+                snapToAlignment="start"
                 decelerationRate="fast"
+
             />
         </View>
     );
