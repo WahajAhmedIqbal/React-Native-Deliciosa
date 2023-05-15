@@ -25,8 +25,15 @@ const Drawer = createDrawerNavigator();
 const DrawerRoot = () => {
   return (
     <Drawer.Navigator>
-      <Drawer.Screen name="OnboardingScreen" component={OnboardingScreen} ptions={{ headerShown: false }}/>
-      <Drawer.Screen name='StackNavigator' component={StackNavigator} options={{ headerShown: false }} />
+      <Drawer.Screen name="OnboardingScreen" 
+      component={OnboardingScreen} options={{
+          swipeEnabled: false,
+          headerShown: false 
+        }}/>
+      <Drawer.Screen name='StackNavigator' component={StackNavigator} options={{
+          swipeEnabled: false,
+          headerShown: false 
+        }} />
     </Drawer.Navigator>
   )
 };
@@ -35,9 +42,9 @@ const DrawerRoot = () => {
 const StackNavigator = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="Wellcome" component={Wellcome} />
-      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Wellcome" component={Wellcome}  />
       <Stack.Screen name="Signup" component={Signup} />
+      <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="ReEnterPassword" component={ReEnterPassword} />
       <Stack.Screen name="OneTimePassword" component={OneTimePassword} />
       <Stack.Screen name="ForgotPassword" component={ForgotPassword} />

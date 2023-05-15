@@ -4,7 +4,7 @@ import { View, FlatList, Text, Image, Dimensions, StyleSheet, TouchableOpacity }
 
 const { width, height } = Dimensions.get('window');
 
-const OnboardingScreen = () => {
+const OnboardingScreen = ({ navigation }) => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef(null)
 
@@ -48,10 +48,16 @@ const OnboardingScreen = () => {
                 <Text style={{ textAlign: 'center', maxWidth: 270, marginLeft: 'auto', marginRight: 'auto', marginTop: 5, fontSize: 16, fontFamily: 'Poppins-Regular', }}>
                     {item.desc}
                 </Text>
-                <TouchableOpacity style={[currentIndex == 2 ? {display:'block'}: null]} onPress={() => handleNextSlide(index + 1)}>
-                    <Text style={styles.buttonText}>Next</Text>
+                {
+                    currentIndex < 2 ? ( <TouchableOpacity
+                        onPress={() => handleNextSlide(index + 1)}>
+                        <Text style={styles.buttonText}>Next {currentIndex} </Text>
+                    </TouchableOpacity> ) : <Text>Hello world</Text>
+                }
+                <TouchableOpacity
+                    onPress={() => handleNextSlide(index - 1)}>
+                    <Text style={styles.buttonText}>Perivous {currentIndex} </Text>
                 </TouchableOpacity>
-
             </View>
         )
     }
