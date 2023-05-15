@@ -1,14 +1,12 @@
 import React, { useRef, useState } from 'react'
-import { View, FlatList, Text, Image, Dimensions, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, FlatList, Text, Image, Dimensions, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 
 
 const { width, height } = Dimensions.get('window');
 
 const OnboardingScreen = ({ navigation }) => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const flatListRef = useRef(null)
-
-    console.log('ref', currentIndex)
+    const [currentIndex, setCurrentIndex] = useState();
+    const flatListRef = useRef(null);
 
     const onBardingData = [
         {
@@ -31,10 +29,21 @@ const OnboardingScreen = ({ navigation }) => {
         },
     ];
 
-    const handleNextSlide = (nextIndex) => {
-        setCurrentIndex(nextIndex);
-        flatListRef.current.scrollToIndex({ animated: true, index: nextIndex });
+    const handleScroll = (event) => {
+        const contentOffset = event.nativeEvent.contentOffset.x;
+        const index = Math.round(contentOffset / width); // assuming each item occupies the full screen width
+        setCurrentIndex(index);
+        console.log('currentIndex', width)
     };
+
+    const handleNextSlide = (nextIndex) => {
+        // setCurrentIndex(nextIndex);
+        // flatListRef.current.scrollToIndex({ animated: true, index: nextIndex });
+    };
+
+    const handleSkip = () => {
+        flatListRef.current.scrollToIndex({ animated: true, index: 2 });
+    }
 
     const onBordingSlides = ({ item, index }) => {
         return (
@@ -46,18 +55,33 @@ const OnboardingScreen = ({ navigation }) => {
                     {item.title}
                 </Text>
                 <Text style={{ textAlign: 'center', maxWidth: 270, marginLeft: 'auto', marginRight: 'auto', marginTop: 5, fontSize: 16, fontFamily: 'Poppins-Regular', }}>
-                    {item.desc}
+                    {item.desc}  {currentIndex}
                 </Text>
-                {
-                    currentIndex < 2 ? ( <TouchableOpacity
-                        onPress={() => handleNextSlide(index + 1)}>
-                        <Text style={styles.buttonText}>Next {currentIndex} </Text>
-                    </TouchableOpacity> ) : <Text>Hello world</Text>
-                }
-                <TouchableOpacity
-                    onPress={() => handleNextSlide(index - 1)}>
-                    <Text style={styles.buttonText}>Perivous {currentIndex} </Text>
-                </TouchableOpacity>
+                <View style={{ marginHorizontal: 10, marginTop: 'auto', marginBottom: 40, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+                    <TouchableOpacity
+                        style={{ width: 120, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#54B848', borderRadius: 5, }}
+                        onPress={handleSkip}
+                    >
+                        <Text style={{ color: '#fff', fontSize: 14, fontFamily: 'Poppins-Regular' }}>
+                            Skip
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        disabled={currentIndex == 0 ? true : false}
+                        style={{ width: 120, height: 50, alignItems: 'center', justifyContent: 'center', borderColor: '#54B848', borderRadius: 5, borderWidth: 1 }}
+                    // onPress={() => handleNextSlide(index - 1)}
+                    >
+                        <Text style={[styles.buttonText, { color: '#000', fontSize: 14, fontFamily: 'Poppins-Regular' }]}>Perivous</Text>
+                    </TouchableOpacity>
+                    {
+                        currentIndex <= 1 ? (<TouchableOpacity
+                            style={{ width: 120, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#54B848', borderRadius: 5, }}
+                        // onPress={() => handleNextSlide(index + 1)}
+                        >
+                            <Text style={[styles.buttonText, { color: '#fff', fontFamily: 'Poppins-Regular', fontSize: 14 }]}>Next</Text>
+                        </TouchableOpacity>) : <Text>Hello world</Text>
+                    }
+                </View>
             </View>
         )
     }
@@ -73,10 +97,10 @@ const OnboardingScreen = ({ navigation }) => {
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}
                 scrollEventThrottle={16}
-                // onScroll={handleScroll}
+                onScroll={handleScroll}
                 snapToInterval={width}
                 snapToAlignment="start"
-                decelerationRate="fast"
+                decelerationRate="normal"
 
             />
         </View>
