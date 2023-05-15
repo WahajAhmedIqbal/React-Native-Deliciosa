@@ -41,6 +41,9 @@ const OnboardingScreen = ({ navigation }) => {
         // flatListRef.current.scrollToIndex({ animated: true, index: nextIndex });
     };
 
+    const handleSwipe = (event) => {
+    }
+
     const handleSkip = () => {
         flatListRef.current.scrollToIndex({ animated: true, index: 2 });
     }
