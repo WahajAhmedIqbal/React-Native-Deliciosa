@@ -5,9 +5,8 @@ import { View, FlatList, Text, Image, Dimensions, StyleSheet, TouchableOpacity, 
 const { width, height } = Dimensions.get('window');
 
 const OnboardingScreen = ({ navigation }) => {
-    const [currentIndex, setCurrentIndex] = useState();
+    const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef(null);
-
     const onBardingData = [
         {
             id: 1,
@@ -31,7 +30,7 @@ const OnboardingScreen = ({ navigation }) => {
 
     const handleScroll = (event) => {
         const contentOffset = event.nativeEvent.contentOffset.x;
-        const index = Math.round(contentOffset / width); 
+        const index = Math.round(contentOffset / width);
         setCurrentIndex(index);
     };
 
@@ -46,7 +45,7 @@ const OnboardingScreen = ({ navigation }) => {
 
     const onBordingSlides = ({ item, index }) => {
         return (
-            <View key={index} style={{ flex: 1, height: height, backgroundColor: '#fff', width: width }}>
+            <View key={index} style={{ position: 'relative', flex: 1, height: height, backgroundColor: '#fff', width: width }}>
                 <Image style={[{
                     height: height * .5,
                 }, styles.onbdImage]} source={item.img} />
@@ -62,7 +61,7 @@ const OnboardingScreen = ({ navigation }) => {
     }
 
     return (
-        <View>
+        <View style={{ position: 'relative', flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <FlatList
                 ref={flatListRef}
                 data={onBardingData}
@@ -75,11 +74,25 @@ const OnboardingScreen = ({ navigation }) => {
                 snapToInterval={width}
                 snapToAlignment="start"
                 decelerationRate="normal"
-
             />
-            <View style={{ paddingHorizontal: 10, marginTop: 'auto', paddingBottom: 10, backgroundColor: '#fff', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
+            <View style={{ position: 'absolute', bottom: 110, display: 'flex', flexDirection: 'row'  }}>
+                <View style={{ width: 10, height: 10, backgroundColor: '#54B848', borderRadius: 100, }}>
+                </View>
+                <View style={{ width: 10, height: 10,  backgroundColor: '#54B848', borderRadius: 100, }}>
+                </View>
+                <View style={{ width: 10, height: 10, backgroundColor: '#54B848', borderRadius: 100, }}>
+                </View>
+            </View>
+            <View style={{ paddingHorizontal: 10, marginTop: 'auto', paddingBottom: 15, backgroundColor: '#fff', display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                 {
-                    currentIndex <= 1 ? (
+                    currentIndex == 2 ? (
+                        <TouchableOpacity
+                            style={{ width: '100%', height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#54B848', borderRadius: 5, }}
+                            onPress={() => navigation.navigate('StackNavigator')}
+                        >
+                            <Text style={[styles.buttonText, { color: '#fff', fontFamily: 'Poppins-Regular', fontSize: 14, fontWeight: '600' }]}>GET STARTED</Text>
+                        </TouchableOpacity>
+                    ) : (
                         <View style={{ flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }} >
                             <TouchableOpacity
                                 style={{ width: 120, height: 50, alignItems: 'center', justifyContent: 'center', borderColor: '#54B848', borderRadius: 5, borderWidth: 1 }}
@@ -91,20 +104,15 @@ const OnboardingScreen = ({ navigation }) => {
                             </TouchableOpacity>
                             <TouchableOpacity
                                 style={{ width: 120, height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#54B848', borderRadius: 5, }}
-                            onPress={() => handleNextSlide(currentIndex + 1)}
+                                onPress={() => handleNextSlide(currentIndex + 1)}
                             >
                                 <Text style={[styles.buttonText, { color: '#fff', fontFamily: 'Poppins-Regular', fontSize: 14 }]}>Next</Text>
                             </TouchableOpacity>
                         </View>
-                    ) : <TouchableOpacity
-                        style={{ width: '100%', height: 50, alignItems: 'center', justifyContent: 'center', backgroundColor: '#54B848', borderRadius: 5, }}
-                        onPress={() => navigation.navigate('StackNavigator')}
-                    >
-                        <Text style={[styles.buttonText, { color: '#fff', fontFamily: 'Poppins-Regular', fontSize: 14, fontWeight: '600' }]}>GET STARTED</Text>
-                    </TouchableOpacity>
+                    )
                 }
             </View>
-        </View>
+        </View >
     );
 };
 
