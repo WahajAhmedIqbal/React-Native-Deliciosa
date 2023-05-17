@@ -78,7 +78,7 @@ const OnboardingScreen = ({ navigation }) => {
             <View style={{ position: 'absolute', bottom: 110, display: 'flex', flexDirection: 'row'  }}>
                 <View style={{ width: 10, height: 10, backgroundColor: '#54B848', borderRadius: 100, }}>
                 </View>
-                <View style={{ width: 10, height: 10,  backgroundColor: '#54B848', borderRadius: 100, }}>
+                <View style={{ marginHorizontal: 5, width: 10, height: 10,  backgroundColor: '#54B848', borderRadius: 100, }}>
                 </View>
                 <View style={{ width: 10, height: 10, backgroundColor: '#54B848', borderRadius: 100, }}>
                 </View>
